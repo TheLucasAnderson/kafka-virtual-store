@@ -1,4 +1,5 @@
 import org.apache.kafka.clients.consumer.ConsumerConfig;
+import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.apache.kafka.clients.consumer.KafkaConsumer;
 import org.apache.kafka.clients.producer.Callback;
 import org.apache.kafka.clients.producer.KafkaProducer;
@@ -14,29 +15,22 @@ import java.util.concurrent.ExecutionException;
 
 public class EmailService {
     public static void main(String[] args) {
-        var consumer = new KafkaConsumer<String, String>(properties());
-        consumer.subscribe(Collections.singletonList("VIRTUAL_STORE_SEND_EMAIL"));
+        var emailService = new EmailService();
+        var service = new KafkaService("VIRTUAL_STORE_SEND_EMAIL", emailService::parse);
+        service.run();
+    }
 
-        while (true) {
-            var records = consumer.poll(Duration.ofMillis(100));
+    private void parse(ConsumerRecord<String, String> record) {
+        System.out.println("_____________________________");
 
-            if(!records.isEmpty()) {
-                System.out.println("Email found: " + records.count());
+        System.out.println("Sending email...");
+        System.out.println("Key: " + record.key());
+        System.out.println("Value: " + record.value());
+        System.out.println("Partition: " + record.partition());
+        System.out.println("Offset: " + record.offset());
+        System.out.println("Email Sent!");
 
-                for(var record : records) {
-                    System.out.println("_____________________________");
-
-                    System.out.println("Sending email...");
-                    System.out.println("Key: " + record.key());
-                    System.out.println("Value: " + record.value());
-                    System.out.println("Partition: " + record.partition());
-                    System.out.println("Offset: " + record.offset());
-                    System.out.println("Email Sent!");
-
-                    System.out.println("_____________________________");
-                }
-            }
-        }
+        System.out.println("_____________________________");
     }
 
     private static Properties properties() {
