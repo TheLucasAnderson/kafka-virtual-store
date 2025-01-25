@@ -5,6 +5,7 @@ import org.apache.kafka.clients.producer.ProducerRecord;
 import org.apache.kafka.common.serialization.StringSerializer;
 
 import java.util.Properties;
+import java.util.UUID;
 import java.util.concurrent.ExecutionException;
 
 public class NewOrderMain {
@@ -12,9 +13,10 @@ public class NewOrderMain {
         var producer = new KafkaProducer<String, String>(properties());
         var value = "123,456,789";
         var email = "teste@teste.com.br";
+        var key = UUID.randomUUID().toString();
 
-        var record = new ProducerRecord<>("VIRTUAL_STORE_NEW_ORDER", value, value);
-        var emailRecord = new ProducerRecord<>("VIRTUAL_STORE_SEND_EMAIL", email, email);
+        var record = new ProducerRecord<>("VIRTUAL_STORE_NEW_ORDER", key, value);
+        var emailRecord = new ProducerRecord<>("VIRTUAL_STORE_SEND_EMAIL", key, email);
 
         producer.send(record, callback()).get();
         producer.send(emailRecord, callback()).get();
