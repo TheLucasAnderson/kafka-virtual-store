@@ -1,5 +1,5 @@
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 
-public interface IConsumerFunction {
-    void consume(ConsumerRecord<String, String> record);
+public interface IConsumerFunction<T> {
+    void consume(ConsumerRecord<String, T> record);
 }
