@@ -1,10 +1,12 @@
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 
+import java.util.Map;
+
 public class FraudDetectorService {
 
     public static void main(String[] args) {
         var fraudDetectorService = new FraudDetectorService();
-        try (var service = new KafkaService(Order.class, "VIRTUAL_STORE_NEW_ORDER", fraudDetectorService::parse);) {
+        try (var service = new KafkaService(Order.class, "VIRTUAL_STORE_NEW_ORDER", fraudDetectorService::parse, Map.of());) {
             service.run();
         }
     }

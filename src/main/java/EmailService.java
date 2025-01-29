@@ -1,9 +1,11 @@
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 
+import java.util.Map;
+
 public class EmailService {
     public static void main(String[] args) {
         var emailService = new EmailService();
-        try (var service = new KafkaService(EmailService.class.getSimpleName(), "VIRTUAL_STORE_SEND_EMAIL", emailService::parse)) {
+        try (var service = new KafkaService(EmailService.class.getSimpleName(), "VIRTUAL_STORE_SEND_EMAIL", emailService::parse, Map.of())) {
             service.run();
         }
     }
