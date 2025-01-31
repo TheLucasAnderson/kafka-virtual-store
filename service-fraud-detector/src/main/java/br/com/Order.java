@@ -1,3 +1,5 @@
+package br.com;
+
 import java.math.BigDecimal;
 
 public class Order {

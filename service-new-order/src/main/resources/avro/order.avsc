@@ -1,0 +1,18 @@
+{
+  "type": "record",
+  "name": "OrderRecord",
+  "fields": [
+    {
+      "name": "userID",
+      "type": "string"
+    },
+    {
+      "name": "orderId",
+      "type": "string"
+    },
+    {
+      "name": "amount",
+      "type": "double"
+    }
+  ]
+}
